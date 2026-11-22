@@ -455,6 +455,7 @@ case'mtog':PF.mus=!PF.mus;sp();applyWinter();rr();return;
 case'mptog':{const p=$('#mpp');if(p)p.hidden=!p.hidden;return}
 case'mpplay':audio(!AU.pl);return;
 case'vxsignin':if(window.VXAuth)window.VXAuth.signIn().then(()=>{render();toast('Google account connected.')}).catch(e=>toast(e.message||'Sign-in failed'));else toast('Authentication is loading.');return;
+case'vxsignout':if(window.VXAuth)window.VXAuth.signOut().then(()=>{render();toast('Signed out.')}).catch(e=>toast(e.message||'Sign-out failed'));return;
 case'admin':openAdmin();return;
 case'atab':admView(d.k);return;
 case'alogin':{if(!window.VXAuth){admLogin('Authentication is still loading. Try again in a moment.');return}window.VXAuth.signIn().then(()=>admView('dash')).catch(e=>admLogin(e.message||'Google sign-in failed'));return}
@@ -484,7 +485,7 @@ document.addEventListener('visibilitychange',()=>document.documentElement.classL
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 const status=document.getElementById("vx-account-status");
-const accountButton=()=>document.querySelector('#vx-account [data-a="vxsignin"]');
+const accountButton=()=>document.querySelector('#vx-account [data-a^="vx"]');
 let auth=null,currentUser=null,session=null;
 async function sessionInfo(user){
   if(!user){session=null;return null}

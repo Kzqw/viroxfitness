@@ -525,8 +525,4 @@ try{
   if(status)status.textContent=error.message;
   const btn=accountButton();if(btn){btn.disabled=true;btn.textContent="Account setup required"}
 }
-document.addEventListener("click",e=>{
-  const btn=e.target.closest('#vx-account [data-a="vxsignout"]');
-  if(btn){e.preventDefault();signOut(auth).catch(()=>{});}
-});
 </script></body></html>

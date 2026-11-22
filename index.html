@@ -118,8 +118,8 @@ function exl(){const r=EX.map((e,i)=>[e,i]).filter(([e])=>(S.g=='All'||e[1]==S.g
 const MET={'Bench press':[60,62.5,65,65,70,72.5,75,80],'Pull-ups':[0,2,4,5,6,8,8,10],'Squat':[80,85,90,95,95,100,105,110]};
 function chart(){const d=MET[S.met],mx=Math.max(...d)*1.1,pts=d.map((v,i)=>[20+i*(300/7),130-v/mx*110]);return`<svg viewBox="0 0 340 150" width="100%"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join('')}" pathLength="1" fill="none" stroke="url(#eg)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1" class="dr"/>${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#2be3a0"/>`).join('')}</svg><div class="row sp mute sm"><span>8 weeks ago</span><span>${d[0]} → ${d[7]} ${S.met=='Pull-ups'?'reps':'kg'}</span></div>`}
 function prog(){return`<h1>Progress</h1><div class="mute">Sample data</div><div style="height:14px"></div><div class="glass stats"><div><b data-n="82">0</b><small>%</small><div class="mute sm">Consistency</div></div><div><b data-n="16">0</b><div class="mute sm">Sessions / month</div></div><div><b data-n="4">0</b><div class="mute sm">Records</div></div></div><div class="glass"><h2>Weekly activity</h2><div id="wk">${wk()}</div></div><div class="glass"><h2>Strength progression</h2><div class="chips">${Object.keys(MET).map(m=>`<button class="chip ${S.met==m?'on':''}" data-a="met" data-m="${m}">${m}</button>`).join('')}</div>${chart()}</div><div class="glass"><h2>Personal records</h2>${[['Squat','110 kg'],['Bench press','80 kg'],['Pull-ups','10 reps']].map(([a,b])=>`<div class="row sp" style="padding:6px 0"><span>${a}</span><b style="font-weight:600;color:var(--em)">${b}</b></div>`).join('')}</div><div class="glass"><h2>Advanced analytics</h2><div class="lock mute">Volume per muscle · Estimated 1RM · 6-month trends · Personal insights</div><button class="btn w" style="margin-top:14px" data-a="pro">${ic('crown')}Unlock with PRO</button></div>`}
-function prof(){const tg=(k,l)=>`<div class="row sp" style="padding:9px 0"><span>${l}</span><button class="tg ${S[k]?'on':''}" data-a="tg" data-k="${k}"></button></div>`;
-return`<div class="row" style="margin-bottom:16px"><span class="av lg">${S.name[0]}</span><div><h1 style="margin:0">${S.name}</h1><div class="mute">${S.level} · ${S.split}</div></div></div><div class="glass"><div class="row"><span class="tag">FREE</span><span class="mute sm">VIROX PRO is not active</span></div><button class="btn w" style="margin-top:14px" data-a="pro">${ic('crown')}Upgrade to PRO</button></div><div class="glass"><h2>Training</h2><div class="row sp sm" style="padding:4px 0"><span class="mute">Goals</span><span>${S.goals.join(', ')||'None'}</span></div><div class="row sp sm" style="padding:4px 0"><span class="mute">Sessions / week</span><span>${S.spw}</span></div><div class="row sp sm" style="padding:4px 0"><span class="mute">Session length</span><span>${S.len}</span></div></div><div class="glass"><h2>Appearance</h2><div class="chips" style="padding-bottom:0">${[['auto','Auto'],['light','Light'],['dark','Dark']].map(([k,l])=>`<button class="chip ${S.theme==k?'on':''}" data-a="th" data-k="${k}">${l}</button>`).join('')}</div></div><div class="glass"><h2>Settings</h2>${tg('haptic','Haptic feedback')}</div><div class="glass"><button class="btn ghost w" data-a="replay">Replay welcome and onboarding</button></div>`}
+function prof(){const account=window.VXAuth?.session,user=window.VXAuth?.user;const tg=(k,l)=>`<div class="row sp" style="padding:9px 0"><span>${l}</span><button class="tg ${S[k]?'on':''}" data-a="tg" data-k="${k}"></button></div>`;
+return`<div class="row" style="margin-bottom:16px"><span class="av lg">${S.name[0]}</span><div><h1 style="margin:0">${S.name}</h1><div class="mute">${S.level} · ${S.split}</div></div></div><div class="glass" id="vx-account"><div class="row sp"><div><h2 style="margin:0">VIROX account</h2><div class="mute sm" id="vx-account-status">${account?.email||user?.email||"Not signed in"}${account?.role==="OWNER"?" · OWNER":""}</div></div><span class="tag">CLOUD</span></div><button class="btn w" style="margin-top:14px" data-a="${user?"vxsignout":"vxsignin"}">${user?"Sign out":"Continue with Google"}</button></div><div class="glass"><div class="row"><span class="tag">FREE</span><span class="mute sm">VIROX PRO is not active</span></div><button class="btn w" style="margin-top:14px" data-a="pro">${ic('crown')}Upgrade to PRO</button></div><div class="glass"><h2>Training</h2><div class="row sp sm" style="padding:4px 0"><span class="mute">Goals</span><span>${S.goals.join(', ')||'None'}</span></div><div class="row sp sm" style="padding:4px 0"><span class="mute">Sessions / week</span><span>${S.spw}</span></div><div class="row sp sm" style="padding:4px 0"><span class="mute">Session length</span><span>${S.len}</span></div></div><div class="glass"><h2>Appearance</h2><div class="chips" style="padding-bottom:0">${[['auto','Auto'],['light','Light'],['dark','Dark']].map(([k,l])=>`<button class="chip ${S.theme==k?'on':''}" data-a="th" data-k="${k}">${l}</button>`).join('')}</div></div><div class="glass"><h2>Settings</h2>${tg('haptic','Haptic feedback')}</div><div class="glass"><button class="btn ghost w" data-a="replay">Replay welcome and onboarding</button></div>`}
 function render(){const m={home,work,lib,chart:prog,user:prof}[S.tab];$('#main').innerHTML=`<div class="scr">${m()}</div>`;$('#main').scrollTop=0;dock();cu();fit();if(RM)document.querySelectorAll('animate,animateTransform').forEach(a=>a.remove())}
 function nut(){const dr=Array.from({length:8},(_,i)=>`<button data-a="wat" data-i="${i}" class="drop ${i<S.water?'on':''}"><svg class="i" viewBox="0 0 24 24" style="width:100%;height:100%;fill:${i<S.water?'currentColor':'none'}"><path d="${P.drop}"/></svg></button>`).join('');
 L.innerHTML=`<div class="ov" style="background:var(--bg);overflow-y:auto;padding:28px 18px 40px;justify-content:flex-start"><div style="max-width:430px;margin:0 auto;width:100%"><div class="row sp"><h1>Nutrition</h1><button class="chip" data-a="close">Close</button></div><div class="glass" style="margin-top:12px"><h2>Hydration · ${(S.water*.3).toFixed(1)} / 2.4 L</h2><div class="row sp">${dr}</div></div>${Object.entries(S.meals).map(([k,v])=>`<div class="glass"><h2>${k}</h2>${v.map(x=>`<div class="mute" style="padding:3px 0">• ${x}</div>`).join('')||'<div class="mute sm">Nothing logged for this meal.</div>'}<input type="text" placeholder="Add a food" style="margin-top:10px" data-a="meal" data-k="${k}"></div>`).join('')}<div class="glass mute sm">Eat varied, with no strict targets: protein at each meal, vegetables, carbs to match your energy.</div></div></div>`}
@@ -435,13 +435,13 @@ function audio(on){if(on){if(!AU.c){const c=AU.c=new(window.AudioContext||window
 function mpBuild(){const d=document.createElement('div');d.id='mp';d.innerHTML=`<button class="mpb ${AU.pl?'pl':''}" data-a="mptog" aria-label="Music player">${ic('note')}</button><div class="mpp" id="mpp" hidden><div class="row sp"><b>Jingle Bells</b><span class="sm" style="opacity:.65">Music box</span></div><div class="row" style="margin:12px 0"><button class="btn" id="mpplay" data-a="mpplay" style="padding:9px 20px">${AU.pl?'Pause':'Play'}</button><input type="range" id="mpv" min="0" max="1" step=".01" value="${PF.vol}" aria-label="Volume"></div><div class="sm" style="opacity:.65">Sound starts only when you press Play.</div></div>`;$('#app').appendChild(d)}
 /* Control Center (admin) UI: all data and rights are enforced server-side */
 const AD={tab:'dash',q:'',set:{}};
-async function api(a,b){const r=await fetch('/api/admin-api?action='+a,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json','x-vx':'1'},body:JSON.stringify(b||{})});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw Object.assign(new Error(j.error||'Request failed'),{status:r.status});return j}
+async function api(a,b){const token=window.VXAuth?await window.VXAuth.token():'';const r=await fetch('/api/admin-api?action='+a,{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json','authorization':'Bearer '+token},body:JSON.stringify(b||{})});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw Object.assign(new Error(j.error||'Request failed'),{status:r.status});return j}
 const adHead=t=>`<div class="row sp"><h1>Control Center</h1><button class="chip" data-a="close">Close</button></div><div class="mute">${t}</div>`;
 const adTabs=()=>`<div class="chips" style="margin:14px 0 4px">${[['dash','Dashboard'],['users','Users'],['subs','Premium'],['set','Settings']].map(([k,l])=>`<button class="chip ${AD.tab==k?'on':''}" data-a="atab" data-k="${k}">${l}</button>`).join('')}<button class="chip" data-a="alogout">Sign out</button></div>`;
-function admLogin(m){L.innerHTML=full(adHead('Private administration · sign in')+`<div class="glass" style="margin-top:16px"><input type="text" id="ae" placeholder="Email" autocomplete="username" style="margin-bottom:10px"><input type="password" id="ap" placeholder="Password" autocomplete="current-password" style="margin-bottom:14px"><button class="btn w" data-a="alogin">Sign in</button>${m?`<p class="mute sm" style="margin:12px 0 0">${esc(m)}</p>`:''}</div>`)}
+function admLogin(m){L.innerHTML=full(adHead('Owner access · Google sign-in')+`<div class="glass" style="margin-top:16px"><p class="mute">Only the verified owner Google account can open this Control Center.</p><button class="btn w" data-a="alogin">Continue with Google</button>${m?`<p class="mute sm" style="margin:12px 0 0">${esc(m)}</p>`:''}</div>`)}
 async function openAdmin(){L.innerHTML=full(adHead('Checking session…'));try{await api('stats');admView('dash')}catch(e){admLogin(e.status==401||e.status==403?'':'Control Center backend not reachable from this page. Deploy the Netlify project (see README) to enable it.')}}
 async function admView(tab){AD.tab=tab;L.innerHTML=full(adHead('Signed in as administrator')+adTabs()+'<div id="ab"><div class="glass mute">Loading…</div></div>');const B=h=>{$('#ab').innerHTML=h};
-try{if(tab=='dash'){const d=await api('stats');B(`<div class="glass g2"><div><b>${d.users}</b><span class="mute sm">Users</span></div><div><b>${d.premium}</b><span class="mute sm">Premium</span></div><div><b>${d.new7}</b><span class="mute sm">New, 7 days</span></div><div><b>€${(d.mrr_cents/100).toFixed(2)}</b><span class="mute sm">Monthly revenue (Stripe)</span></div></div><div class="glass"><h2>Recent activity</h2>${d.activity.length?d.activity.map(a=>`<div class="row sp sm" style="padding:4px 0"><span>${esc(a.action)} ${esc(a.target||'')}</span><span class="mute">${new Date(a.at).toLocaleString('en-GB')}</span></div>`).join(''):'<div class="mute sm">No activity yet.</div>'}</div>`)}
+try{if(tab=='dash'){const d=await api('stats');B(`<div class="glass g2"><div><b>${d.users}</b><span class="mute sm">Users</span></div><div><b>${d.premium}</b><span class="mute sm">Premium</span></div><div><b>${d.new7}</b><span class="mute sm">New, 7 days</span></div><div><b>${d.mrr_cents==null?"—":"€"+(d.mrr_cents/100).toFixed(2)}</b><span class="mute sm">Monthly revenue (Stripe)</span></div></div><div class="glass"><h2>Recent activity</h2>${d.activity.length?d.activity.map(a=>`<div class="row sp sm" style="padding:4px 0"><span>${esc(a.action)} ${esc(a.target||'')}</span><span class="mute">${new Date(a.at).toLocaleString('en-GB')}</span></div>`).join(''):'<div class="mute sm">No activity yet.</div>'}</div>`)}
 else if(tab=='users'){const d=await api('users',{q:AD.q});B(`<input type="text" id="aq" placeholder="Search by email" value="${esc(AD.q)}" data-a="asearch" style="margin:12px 0">${d.users.map(u=>`<div class="glass"><b>${esc(u.email||u.id)}</b><div class="mute sm">${esc(u.role)} · ${u.access_blocked?'blocked':'active'} · ${u.premium?'Premium':'Free'} · joined ${new Date(u.created_at).toLocaleDateString('en-GB')}</div><div class="row wrap" style="margin-top:10px;gap:8px"><button class="chip" data-a="ablock" data-id="${u.id}" data-v="${u.access_blocked?0:1}">${u.access_blocked?'Unblock':'Block access'}</button><button class="chip" data-a="apre" data-id="${u.id}" data-v="${u.premium?0:1}">${u.premium?'Revoke Premium':'Grant Premium (30 days)'}</button></div></div>`).join('')||'<div class="glass mute">No users.</div>'}`)}
 else if(tab=='subs'){const d=await api('subs');B(d.subs.map(s=>`<div class="glass"><div class="row sp"><b>${esc(s.email||s.user_id)}</b><span class="tag">${esc(s.status)}</span></div><div class="mute sm" style="margin-top:6px">${esc(s.source)} · ${s.current_period_end?'ends '+new Date(s.current_period_end).toLocaleDateString('en-GB'):'no end date'}${s.cancel_at_period_end?' · cancels at period end':''}</div></div>`).join('')||'<div class="glass mute">No subscriptions.</div>')}
 else{const d=await api('settings');AD.set=d.settings;B(`<div class="glass"><h2>Features</h2>${[['winter_enabled','Winter Edition available'],['music_enabled','Music player available'],['signups_open','New sign-ups open']].map(([k,l])=>`<div class="row sp" style="padding:9px 0"><span>${l}</span><button class="tg ${d.settings[k]!==false?'on':''}" data-a="aset" data-k="${k}"></button></div>`).join('')}</div>`)}}
@@ -454,10 +454,12 @@ case'wtog':PF.winter=!PF.winter;sp();applyWinter();rr();return;
 case'mtog':PF.mus=!PF.mus;sp();applyWinter();rr();return;
 case'mptog':{const p=$('#mpp');if(p)p.hidden=!p.hidden;return}
 case'mpplay':audio(!AU.pl);return;
+case'vxsignin':if(window.VXAuth)window.VXAuth.signIn().then(()=>{render();toast('Google account connected.')}).catch(e=>toast(e.message||'Sign-in failed'));else toast('Authentication is loading.');return;
+case'vxsignout':if(window.VXAuth)window.VXAuth.signOut().then(()=>{render();toast('Signed out.')}).catch(e=>toast(e.message||'Sign-out failed'));return;
 case'admin':openAdmin();return;
 case'atab':admView(d.k);return;
-case'alogin':{const e=$('#ae').value.trim(),p=$('#ap').value;fetch('/api/admin-login',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json','x-vx':'1'},body:JSON.stringify({email:e,password:p})}).then(async r=>{const j=await r.json().catch(()=>({}));if(r.ok)admView('dash');else admLogin(j.error||'Sign-in failed')}).catch(()=>admLogin('Control Center backend not reachable from this page. Deploy the Netlify project (see README) to enable it.'));return}
-case'alogout':fetch('/api/admin-logout',{method:'POST',credentials:'same-origin',headers:{'x-vx':'1'}}).finally(()=>admLogin(''));return;
+case'alogin':{if(!window.VXAuth){admLogin('Authentication is still loading. Try again in a moment.');return}window.VXAuth.signIn().then(()=>admView('dash')).catch(e=>admLogin(e.message||'Google sign-in failed'));return}
+case'alogout':if(window.VXAuth)window.VXAuth.signOut().then(()=>admLogin('Signed out.'));return;
 case'ablock':api('user-block',{id:d.id,blocked:d.v=='1'}).then(()=>admView('users')).catch(e=>toast(e.message));return;
 case'apre':api('premium',{id:d.id,grant:d.v=='1'}).then(()=>admView('users')).catch(e=>toast(e.message));return;
 case'aset':api('setting',{key:d.k,value:AD.set[d.k]===false}).then(()=>admView('set')).catch(e=>toast(e.message));return}
@@ -479,4 +481,48 @@ r.querySelectorAll('.ov:not(.cine)').forEach(o=>{if(!o.getAttribute('role')){o.s
 let q=0;new MutationObserver(m=>{if(q||!m.some(x=>[...x.addedNodes].some(n=>n.nodeType==1)))return;q=1;requestAnimationFrame(()=>{q=0;a11y(document)})}).observe(document.getElementById('app'),{childList:true,subtree:true});a11y(document);
 document.addEventListener('keydown',e=>{const t=e.target;if(t.getAttribute&&t.getAttribute('role')=='button'&&t.tagName!='BUTTON'&&(e.key=='Enter'||e.key==' ')){e.preventDefault();t.click()}});
 document.addEventListener('visibilitychange',()=>document.documentElement.classList.toggle('hid',document.hidden))})();
+</script><script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+const status=document.getElementById("vx-account-status");
+const accountButton=()=>document.querySelector('#vx-account [data-a^="vx"]');
+let auth=null,currentUser=null,session=null;
+async function sessionInfo(user){
+  if(!user){session=null;return null}
+  const token=await user.getIdToken();
+  const response=await fetch("/api/auth-session",{method:"POST",headers:{authorization:"Bearer "+token}});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||"Could not verify VIROX account");
+  return data;
+}
+window.VXAuth={
+  async signIn(){if(!auth)throw new Error("Firebase is not configured yet.");const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});await signInWithPopup(auth,provider);},
+  async signOut(){if(auth)await signOut(auth)},
+  async token(){return currentUser?await currentUser.getIdToken(): ""},
+  get session(){return session},
+  get user(){return currentUser}
+};
+try{
+  const response=await fetch("/api/public-config",{cache:"no-store"});
+  const config=await response.json();
+  if(!response.ok)throw new Error(config.error||"Firebase configuration is missing");
+  auth=getAuth(initializeApp(config));
+  onAuthStateChanged(auth,async user=>{
+    currentUser=user;
+    const btn=accountButton();
+    if(!user){session=null;if(status)status.textContent="Not signed in";if(btn)btn.textContent="Continue with Google";return}
+    try{
+      session=await sessionInfo(user);
+      if(status)status.textContent=session.email+(session.role==="OWNER"?" · OWNER": " · Signed in")+(session.premium?" · PRO":"");
+      if(btn){btn.textContent="Sign out";btn.dataset.a="vxsignout"}
+    }catch(error){
+      if(status)status.textContent=error.message;
+      if(btn){btn.textContent="Sign out";btn.dataset.a="vxsignout"}
+      await signOut(auth).catch(()=>{});
+    }
+  });
+}catch(error){
+  if(status)status.textContent=error.message;
+  const btn=accountButton();if(btn){btn.disabled=true;btn.textContent="Account setup required"}
+}
 </script></body></html>

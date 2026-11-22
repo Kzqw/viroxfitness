@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // VIROX data is accessed only by trusted Netlify Functions using the
+    // Firebase Admin SDK. Never expose user or admin collections to browsers.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

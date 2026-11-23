@@ -1,6 +1,6 @@
 import { services, ownerUser, json } from "./_firebase.mjs";
 
-const allowedSettings = new Set(["winter_enabled", "music_enabled", "signups_open"]);
+const allowedSettings = new Set(["winter_enabled", "music_enabled", "signups_open", "coach_enabled"]);
 const dateValue = value => value?.toDate ? value.toDate().toISOString() : value || null;
 
 async function log(db, FieldValue, action, target, actor) {
@@ -67,7 +67,7 @@ export default async function handler(request) {
 
     if (action === "settings") {
       const snap = await db.collection("settings").doc("public").get();
-      return json({ settings: { winter_enabled: true, music_enabled: true, signups_open: true, ...(snap.exists ? snap.data() : {}) } });
+      return json({ settings: { winter_enabled: true, music_enabled: true, signups_open: true, coach_enabled: true, ...(snap.exists ? snap.data() : {}) } });
     }
 
     if (action === "setting") {
@@ -84,7 +84,7 @@ export default async function handler(request) {
       const ref = usersRef.doc(uid);
       const snap = await ref.get();
       if (!snap.exists) return json({ error: "User not found" }, 404);
-      if (String(snap.data().email || "").toLowerCase() === String(process.env.OWNER_EMAIL).toLowerCase()) {
+      if (String(snap.data().email || "").toLowerCase() === String(process.env.OWNER_EMAIL || "").trim().toLowerCase()) {
         return json({ error: "The owner account cannot be blocked" }, 403);
       }
       const blocked = body.blocked === true;

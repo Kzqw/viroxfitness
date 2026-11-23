@@ -48,3 +48,18 @@ Publish the contents of `firestore.rules` in Firebase Console → Firestore Data
 - Premium payment is **not activated**. The existing €9.99 screen is a design preview. No card is charged, and an admin Premium grant is a manual 30-day entitlement, not a verified payment.
 - The dashboard does not report Stripe/App Store revenue. A payment provider, server-side checkout, webhook signature verification, refunds and subscription lifecycle handling must be implemented before taking payments.
 - Test the branch preview and complete the Firebase setup before merging it into `main`. Netlify automatically publishes `main`.
+
+
+## VIROX AI Coach
+
+The dashboard includes a VIROX AI Coach entry point. The server-side Netlify Function is `netlify/functions/coach-api.mjs`; the browser calls `/api/coach-api` and never receives the provider key.
+
+Add these variables in Netlify → Site configuration → Environment variables:
+
+- `AI_API_KEY` — your Gemini API key or Groq API key.
+- `AI_PROVIDER` — optional. Use `gemini` for Google AI Studio (default), or `openai` for Groq's OpenAI-compatible API.
+
+For Groq, set `AI_PROVIDER=openai`. For Gemini, set `AI_PROVIDER=gemini` or leave it unset. After changing environment variables, trigger a new Netlify deploy.
+
+The current server-side limits are 5 messages/day for free accounts and 40 messages/day for valid Premium accounts. Conversations are stored under each authenticated user's Firestore record. The coach requires a verified Google sign-in. Never commit API keys to GitHub or paste them into chat.
+

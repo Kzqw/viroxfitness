@@ -1,6 +1,6 @@
 import { services, json } from "./_firebase.mjs";
 
-const defaults = { winter_enabled: true, music_enabled: true, signups_open: true };
+const defaults = { winter_enabled: true, music_enabled: true, signups_open: true, coach_enabled: true };
 
 export default async function handler(request) {
   if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);

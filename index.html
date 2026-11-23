@@ -106,10 +106,6 @@ const hist=[['Push','Yesterday','52 min','8,450 kg',['Chest','Shoulders','Tricep
 return`<div class="hd"><div><div class="mute sm" style="letter-spacing:.06em">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</div><div style="font:200 24px/1.1 Outfit;color:var(--mute);margin-top:12px">${gr}</div><h1 style="font-size:42px;letter-spacing:-.04em;margin:0 0 2px">${S.name}</h1><button class="pp" data-a="pro">${ic('crown')}PRO</button></div><div class="row" style="gap:12px"><button class="ibtn" data-a="bell">${ic('bell')}<i></i></button><button class="av" data-a="tab" data-k="user">${S.name[0]}</button></div></div>
 <div class="glass hero"><svg class="ill" viewBox="0 0 240 220"><defs><radialGradient id="pl" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#6f9285"/><stop offset=".55" stop-color="#1c2d27"/><stop offset="1" stop-color="#060c0a"/></radialGradient><linearGradient id="br" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1fff9"/><stop offset=".35" stop-color="#7ea597"/><stop offset=".7" stop-color="#1a2b25"/><stop offset="1" stop-color="#5f8578"/></linearGradient><linearGradient id="rm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2be3a0"/><stop offset="1" stop-color="#2be3a0" stop-opacity="0"/></linearGradient><radialGradient id="gw"><stop offset="0" stop-color="#2be3a0" stop-opacity=".42"/><stop offset="1" stop-color="#2be3a0" stop-opacity="0"/></radialGradient><filter id="bl"><feGaussianBlur stdDeviation="4"/></filter></defs><circle cx="120" cy="105" r="100" fill="url(#gw)"><animate attributeName="r" values="92;104;92" dur="3.2s" repeatCount="indefinite"/></circle><circle cx="120" cy="105" r="92" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" transform="rotate(-90 120 105)" stroke-dasharray="30 548"><animate attributeName="stroke-dasharray" values="30 548;330 248;30 548" dur="3.2s" repeatCount="indefinite"/></circle><ellipse cx="120" cy="196" rx="70" ry="9" fill="#000" opacity=".5" filter="url(#bl)"><animate attributeName="rx" values="70;56;70" dur="3.2s" repeatCount="indefinite"/></ellipse><g><animateTransform attributeName="transform" type="translate" values="0 6;0 -8;0 6" dur="3.2s" repeatCount="indefinite"/><g transform="rotate(-20 120 105)"><rect x="40" y="100" width="160" height="11" rx="5.5" fill="url(#br)"/><rect x="44" y="102" width="152" height="2" rx="1" fill="#fff" opacity=".5"/><rect x="36" y="76" width="16" height="58" rx="7" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.2"/><rect x="52" y="62" width="22" height="86" rx="9" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.5"/><rect x="74" y="94" width="8" height="22" rx="3" fill="url(#br)"/><path d="M57 72q5-7 12 0" fill="none" stroke="#fff" opacity=".4" stroke-width="2" stroke-linecap="round"/><rect x="188" y="76" width="16" height="58" rx="7" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.2"/><rect x="166" y="62" width="22" height="86" rx="9" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.5"/><rect x="158" y="94" width="8" height="22" rx="3" fill="url(#br)"/><path d="M171 72q5-7 12 0" fill="none" stroke="#fff" opacity=".4" stroke-width="2" stroke-linecap="round"/></g></g></svg>
 <div class="mute sm">Up next · 6:30 PM</div><h1 style="font-size:38px;margin:6px 0 0">Pull Day</h1><div class="mute">Back · Biceps</div><div class="row sm" style="margin:16px 0 26px"><span class="mp">55 min</span><span class="mp">6 exercises</span></div><button class="btn start" data-a="start" data-t="Pull"><span class="pl">${ic('play')}</span>Start workout</button></div>
-<div class="glass" style="background:radial-gradient(90% 120% at 100% 0,rgba(43,227,160,.18),transparent 65%),var(--gl);padding:18px">
-  <div class="row sp"><div><div class="tag" style="color:var(--em)">VIROX AI</div><h2 style="margin:10px 0 4px">Your personal coach</h2><div class="mute sm">Get guidance, build a routine and stay consistent.</div></div><span style="font-size:28px;color:var(--em)">✦</span></div>
-  <button class="btn w" style="margin-top:14px" data-a="coach">Chat with your AI coach</button>
-</div>
 <div class="glass stats"><div><b data-n="3">0</b><small>/4</small><div class="mute sm">Sessions</div></div><div><b data-n="12.4" data-d="1">0</b><small> t</small><div class="mute sm">Volume</div></div><div><b data-n="${(S.water*.3).toFixed(1)}" data-d="1">0</b><small> L</small><div class="mute sm">Hydration</div></div></div>
 <div class="glass"><div class="row sp"><h2>This week</h2><span class="mute sm">4h 25m</span></div><div id="wk">${wk()}</div></div>
 <div class="glass"><h2>Recovery</h2><div class="rings">${ring('Chest',92)}${ring('Back',58)}${ring('Legs',100)}${ring('Shoulders',74)}</div></div>
@@ -151,77 +147,6 @@ L.innerHTML=`<div class="ov cine ${s=='ob'?'':''}">${s=='ob'?'':pts()}${h}</div>
 function tick(){if(W.rest>0){W.rest--;const t=$('#rt');if(t){t.textContent=Math.floor(W.rest/60)+':'+String(W.rest%60).padStart(2,'0');$('#rc').style.strokeDashoffset=213.6*(1-W.rest/W.max)}if(!W.rest){$('#rbox')&&$('#rbox').remove();toast('Rest over: next set.');buzz()}}}
 setInterval(()=>tick(),1000);
 function restBox(){const o=$('#rbox');o&&o.remove();if(!W.rest)return;const d=document.createElement('div');d.id='rbox';d.className='glass rest';d.innerHTML=`<svg width="48" height="48" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="var(--gb)" stroke-width="6"/><circle id="rc" cx="40" cy="40" r="34" fill="none" stroke="var(--em)" stroke-width="6" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="0" transform="rotate(-90 40 40)" style="transition:stroke-dashoffset 1s linear"/></svg><div style="flex:1"><div class="mute sm">Rest</div><b id="rt" style="font:600 22px Outfit">1:30</b></div><button class="chip" data-a="skip">Skip</button>`;$('#app').appendChild(d)}
-
-let COACH = { threadId: null, messages: [], busy: false, threads: [] };
-const coachEscape = value => String(value || "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
-async function coachRequest(action, payload = {}) {
-  const token = window.VXAuth ? await window.VXAuth.token() : "";
-  if (!token) throw new Error("Sign in with Google to use your AI coach.");
-  const response = await fetch("/api/coach-api?action=" + encodeURIComponent(action), {
-    method: "POST", headers: { "content-type": "application/json", authorization: "Bearer " + token },
-    body: JSON.stringify(payload)
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || "Coach request failed");
-  return data;
-}
-function coachDraw() {
-  const list = document.getElementById("vx-coach-messages");
-  if (!list) return;
-  list.innerHTML = COACH.messages.map(m => '<div style="display:flex;justify-content:' + (m.role === "assistant" ? "flex-start" : "flex-end") + ';margin:10px 0"><div style="max-width:88%;padding:12px 14px;border-radius:18px;background:' + (m.role === "assistant" ? "var(--gl)" : "rgba(43,227,160,.16)") + ';border:1px solid var(--gb);white-space:pre-wrap;overflow-wrap:anywhere">' + coachEscape(m.content) + '</div></div>').join("");
-  list.scrollTop = list.scrollHeight;
-  const send = document.getElementById("vx-coach-send");
-  if (send) { send.disabled = COACH.busy; send.textContent = COACH.busy ? "Thinking…" : "Send"; }
-}
-function coachShell() {
-  L.innerHTML = '<div class="ov" style="background:var(--bg);overflow-y:auto;padding:18px 12px 28px;justify-content:flex-start"><div class="sheet" style="width:100%;max-width:650px;margin:0 auto;border-radius:28px;max-height:none;min-height:80vh;padding:20px 16px"><div class="row sp"><div><div class="tag" style="color:var(--em)">VIROX AI COACH</div><h1 style="font-size:27px;margin-top:10px">Your training partner</h1><div class="mute sm">Supportive, practical guidance for your fitness journey.</div></div><button class="chip" data-a="close">Close</button></div><div id="vx-coach-history" class="chips" style="margin-top:14px"></div><div id="vx-coach-messages" class="glass" style="height:42vh;min-height:260px;overflow-y:auto;padding:12px;margin-top:12px"></div><div style="margin-top:12px"><textarea id="vx-coach-input" rows="3" maxlength="3000" placeholder="Ask about training, exercises or recovery…" style="width:100%;resize:vertical;padding:14px;border-radius:18px;border:1px solid var(--gb);background:var(--gl);color:var(--ink);font:inherit;outline:none"></textarea><div class="row sp" style="margin-top:10px"><div id="vx-coach-status" class="mute sm">Free plan: 5 messages per day</div><button class="btn" id="vx-coach-send" data-a="coach-send">Send</button></div></div><div class="mute sm" style="margin-top:14px">General fitness guidance only. For pain, injury or health concerns, speak with a qualified professional.</div></div></div>';
-  coachDraw();
-}
-async function openCoach() {
-  if (!window.VXAuth?.user) { toast("Sign in with Google from your Profile to use the AI coach."); S.tab = "user"; render(); return; }
-  COACH = { threadId: null, messages: [], busy: false, threads: [] };
-  coachShell();
-  try {
-    const data = await coachRequest("history");
-    COACH.threads = data.threads || [];
-    const status = document.getElementById("vx-coach-status");
-    if (status) status.textContent = (data.premium ? "PRO" : "Free plan") + " · " + data.dailyLimit + " messages per day";
-    const history = document.getElementById("vx-coach-history");
-    if (history) history.innerHTML = '<button class="chip on" data-a="coach-new">New chat</button>' + COACH.threads.map(t => '<button class="chip" data-a="coach-open" data-id="' + coachEscape(t.id) + '">' + coachEscape(t.title) + '</button>').join("");
-    if (COACH.threads.length) { COACH.threadId = COACH.threads[0].id; COACH.messages = COACH.threads[0].messages || []; }
-    else COACH.messages = [{ role: "assistant", content: "Hi! I’m your VIROX coach. Tell me your training goal, experience level and available equipment, and we’ll build a sensible plan together." }];
-    coachDraw();
-  } catch (error) {
-    const status = document.getElementById("vx-coach-status");
-    if (status) status.textContent = error.message;
-  }
-}
-async function coachSend() {
-  const input = document.getElementById("vx-coach-input");
-  if (!input || COACH.busy) return;
-  const message = input.value.trim();
-  if (!message) return;
-  COACH.messages.push({ role: "user", content: message });
-  input.value = "";
-  COACH.busy = true;
-  coachDraw();
-  try {
-    const data = await coachRequest("chat", { message, threadId: COACH.threadId });
-    COACH.threadId = data.threadId;
-    COACH.messages.push({ role: "assistant", content: data.reply });
-    const status = document.getElementById("vx-coach-status");
-    if (status) status.textContent = (data.premium ? "PRO" : "Free plan") + " · " + data.remaining + " messages left today";
-  } catch (error) { COACH.messages.push({ role: "assistant", content: error.message }); }
-  finally { COACH.busy = false; coachDraw(); }
-}
-function coachOpenThread(id) {
-  const thread = COACH.threads.find(t => t.id === id);
-  if (!thread) return;
-  COACH.threadId = thread.id;
-  COACH.messages = thread.messages || [];
-  coachDraw();
-}
-
 function act(a,d,el){buzz();switch(a){
 case'tab':S.tab=d.k;render();break;
 case'start':W.type=d.t;W.on=true;W.ex=TY[d.t].map(mk);S.tab='work';render();break;
@@ -235,8 +160,7 @@ case'finish':{const k=W.ex.reduce((t,e)=>t+e.sets.filter(s=>s.d).length,0);W.on=
 case'g':S.g=d.g;render();break;case'met':S.met=d.m;render();break;
 case'day':{S.day=+d.i;const w=$('#wk');w.querySelector('.tip').innerHTML=tipH();w.querySelectorAll('.bars button').forEach((b,j)=>b.classList.toggle('sel',j==S.day));break}
 case'bell':toast('No new notifications.');break;
-case'exd':exd(d.i);break;case'pro':pro();break;case'nut':nut();break;
-case'coach':openCoach();break;case'coach-send':coachSend();break;case'coach-new':COACH.threadId=null;COACH.messages=[];coachDraw();break;case'coach-open':coachOpenThread(d.id);break;case'close':L.innerHTML='';break;
+case'exd':exd(d.i);break;case'pro':pro();break;case'nut':nut();break;case'close':L.innerHTML='';break;
 case'addto':{const n=EX[d.i][0];if(!W.on){W.on=true;W.ex=[]}W.ex.push(mk(n));S.tab='work';L.innerHTML='';render();break}
 case'wat':S.water=S.water==+d.i+1?+d.i:+d.i+1;nut();break;
 case'buy':toast('Design preview: real payment will go through StoreKit 2 in the native app. No purchase is simulated.');break;
@@ -428,7 +352,7 @@ fit=function(){document.documentElement.style.setProperty('--dockh',(MODE=='desk
 addEventListener('resize',()=>{const m=modeOf();if(m==MODE)return;MODE=m;document.documentElement.dataset.mode=m;fit();if(!L.innerHTML)rr()});
 document.addEventListener('keydown',e=>{if(e.key=='Escape'&&L.innerHTML&&!$('.cine')){L.innerHTML='';return}if(/INPUT|TEXTAREA/.test(e.target.tagName)||L.innerHTML||e.metaKey||e.ctrlKey)return;const i='12345'.indexOf(e.key);if(i>=0)act('tab',{k:T[i][0]},null)});
 /* v5: 3D intro, Winter Edition, music player, Control Center UI */
-let PF={winter:true,vol:.5,mus:true},SRV={winter_enabled:true,music_enabled:true};
+let PF={winter:true,vol:.5,mus:true},SRV={winter_enabled:true,music_enabled:true,coach_enabled:true};
 try{Object.assign(PF,JSON.parse(localStorage.getItem('vx_pref')||'{}'))}catch(e){}
 const sp=()=>{try{localStorage.setItem('vx_pref',JSON.stringify(PF))}catch(e){}};
 const winterOn=()=>PF.winter&&SRV.winter_enabled;
@@ -520,7 +444,7 @@ async function admView(tab){AD.tab=tab;L.innerHTML=full(adHead('Signed in as adm
 try{if(tab=='dash'){const d=await api('stats');B(`<div class="glass g2"><div><b>${d.users}</b><span class="mute sm">Users</span></div><div><b>${d.premium}</b><span class="mute sm">Premium</span></div><div><b>${d.new7}</b><span class="mute sm">New, 7 days</span></div><div><b>${d.mrr_cents==null?"—":"€"+(d.mrr_cents/100).toFixed(2)}</b><span class="mute sm">Monthly revenue (Stripe)</span></div></div><div class="glass"><h2>Recent activity</h2>${d.activity.length?d.activity.map(a=>`<div class="row sp sm" style="padding:4px 0"><span>${esc(a.action)} ${esc(a.target||'')}</span><span class="mute">${new Date(a.at).toLocaleString('en-GB')}</span></div>`).join(''):'<div class="mute sm">No activity yet.</div>'}</div>`)}
 else if(tab=='users'){const d=await api('users',{q:AD.q});B(`<input type="text" id="aq" placeholder="Search by email" value="${esc(AD.q)}" data-a="asearch" style="margin:12px 0">${d.users.map(u=>`<div class="glass"><b>${esc(u.email||u.id)}</b><div class="mute sm">${esc(u.role)} · ${u.access_blocked?'blocked':'active'} · ${u.premium?'Premium':'Free'} · joined ${new Date(u.created_at).toLocaleDateString('en-GB')}</div><div class="row wrap" style="margin-top:10px;gap:8px"><button class="chip" data-a="ablock" data-id="${u.id}" data-v="${u.access_blocked?0:1}">${u.access_blocked?'Unblock':'Block access'}</button><button class="chip" data-a="apre" data-id="${u.id}" data-v="${u.premium?0:1}">${u.premium?'Revoke Premium':'Grant Premium (30 days)'}</button></div></div>`).join('')||'<div class="glass mute">No users.</div>'}`)}
 else if(tab=='subs'){const d=await api('subs');B(d.subs.map(s=>`<div class="glass"><div class="row sp"><b>${esc(s.email||s.user_id)}</b><span class="tag">${esc(s.status)}</span></div><div class="mute sm" style="margin-top:6px">${esc(s.source)} · ${s.current_period_end?'ends '+new Date(s.current_period_end).toLocaleDateString('en-GB'):'no end date'}${s.cancel_at_period_end?' · cancels at period end':''}</div></div>`).join('')||'<div class="glass mute">No subscriptions.</div>')}
-else{const d=await api('settings');AD.set=d.settings;B(`<div class="glass"><h2>Features</h2>${[['winter_enabled','Winter Edition available'],['music_enabled','Music player available'],['signups_open','New sign-ups open']].map(([k,l])=>`<div class="row sp" style="padding:9px 0"><span>${l}</span><button class="tg ${d.settings[k]!==false?'on':''}" data-a="aset" data-k="${k}"></button></div>`).join('')}</div>`)}}
+else{const d=await api('settings');AD.set=d.settings;B(`<div class="glass"><h2>Features</h2>${[['winter_enabled','Winter Edition available'],['music_enabled','Music player available'],['signups_open','New sign-ups open'],['coach_enabled','AI Coach available']].map(([k,l])=>`<div class="row sp" style="padding:9px 0"><span>${l}</span><button class="tg ${d.settings[k]!==false?'on':''}" data-a="aset" data-k="${k}"></button></div>`).join('')}</div>`)}}
 catch(e){if(e.status==401||e.status==403)admLogin(e.message||'Access denied. Check the owner account configuration.');else B(`<div class="glass mute">${esc(e.message)}</div>`)}}
 /* actions */
 const prof1=prof;prof=function(){return prof1().replace('<div class="glass"><h2>Settings</h2>',`<div class="glass"><h2>Winter Edition</h2><div class="row sp" style="padding:9px 0"><span>Winter theme</span><button class="tg ${winterOn()?'on':''}" data-a="wtog"></button></div><div class="row sp" style="padding:9px 0"><span>Music player</span><button class="tg ${PF.mus?'on':''}" data-a="mtog"></button></div>${SRV.winter_enabled?'':'<div class="mute sm">Disabled by the administrator.</div>'}</div><div class="glass"><h2>Settings</h2>`).replace('<div class="glass"><button class="btn ghost w" data-a="replay">','<div class="glass"><button class="btn ghost w" data-a="admin">VIROX Control Center</button></div><div class="glass"><button class="btn ghost w" data-a="replay">')};
@@ -557,7 +481,197 @@ r.querySelectorAll('.ov:not(.cine)').forEach(o=>{if(!o.getAttribute('role')){o.s
 let q=0;new MutationObserver(m=>{if(q||!m.some(x=>[...x.addedNodes].some(n=>n.nodeType==1)))return;q=1;requestAnimationFrame(()=>{q=0;a11y(document)})}).observe(document.getElementById('app'),{childList:true,subtree:true});a11y(document);
 document.addEventListener('keydown',e=>{const t=e.target;if(t.getAttribute&&t.getAttribute('role')=='button'&&t.tagName!='BUTTON'&&(e.key=='Enter'||e.key==' ')){e.preventDefault();t.click()}});
 document.addEventListener('visibilitychange',()=>document.documentElement.classList.toggle('hid',document.hidden))})();
-</script><script type="module">
+</script>
+<style id="co-css">
+.co{display:flex;flex-direction:column;height:100%;min-height:0;max-width:760px;margin:0 auto;width:100%}
+.cob{flex:1;min-height:0;overflow-y:auto;padding-bottom:12px;scrollbar-width:none}
+.co-ov input[type=text],.co-ov input[type=number],.co-ov textarea,.co-ov select{width:100%;box-sizing:border-box;text-align:left;padding:12px 14px;border-radius:16px;border:1px solid var(--gb);background:var(--gl);color:var(--ink);font:inherit;outline:0}
+.co-ov select option{color:#111}
+.co-ov label{display:block;font-size:12.5px;color:var(--mute);margin:12px 0 5px}
+.cm{max-width:88%;padding:11px 14px;border-radius:20px;margin:8px 0;line-height:1.45;font-size:15px;word-wrap:break-word;animation:in .3s}
+.cm.u{margin-left:auto;background:linear-gradient(135deg,var(--em),var(--em2));color:#021a11;border-bottom-right-radius:6px}
+.cm.a{background:var(--gl);box-shadow:inset 0 0 0 1px var(--gb);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom-left-radius:6px}
+.typ i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--em);margin:0 2px;animation:covb 1.1s infinite ease-in-out}
+.typ i:nth-child(2){animation-delay:.15s}.typ i:nth-child(3){animation-delay:.3s}
+@keyframes covb{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
+@media (prefers-reduced-motion:reduce){.typ i,.cm{animation:none}}
+.cin{display:flex;gap:8px;align-items:flex-end;padding:10px 0 6px}
+.cin textarea{flex:1;resize:none;max-height:120px}
+.cin .btn{width:48px;height:48px;padding:0;flex:none;border-radius:50%}
+.cerr{margin:8px 0;padding:11px 14px;border-radius:16px;background:rgba(255,90,90,.14);box-shadow:inset 0 0 0 1px rgba(255,120,120,.35);font-size:14px}
+.cex{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;margin-top:6px}
+.cex .nm{grid-column:1/-1}
+.cdel{width:40px;border-radius:14px;background:var(--gl);box-shadow:inset 0 0 0 1px var(--gb);color:var(--ink)}
+.cg{display:grid;gap:10px;margin:10px 0}
+.co .glass{padding:14px;border-radius:22px}
+</style>
+<script>
+/* VIROX Coach IA — l'interface ne contient aucune clé ni logique de droits :
+   tout passe par /api/coach-api (jeton Firebase vérifié côté serveur) */
+(function(){
+const FR=/^fr/i.test(navigator.language||''),t=(en,fr)=>FR?fr:en;
+const CO={view:'chat',cid:null,msgs:[],busy:false,status:null,profile:null,convs:null,progs:null,logs:null,draft:null,gen:{},lift:'',err:'',genBusy:false};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^(?:- |\* )(.+)$/gm,'• $1').replace(/\n/g,'<br>');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function who(ms){for(let i=0;i<ms/100;i++){if(window.VXAuth&&window.VXAuth.user)return window.VXAuth.user;await wait(100)}return null}
+async function api(a,b){
+  if(!(await who(4000)))throw Object.assign(new Error(t('Sign in with Google to use the coach.','Connecte-toi avec Google pour utiliser le coach.')),{status:401});
+  const token=await window.VXAuth.token();
+  const r=await fetch('/api/coach-api?action='+a,{method:'POST',headers:{'content-type':'application/json',authorization:'Bearer '+token},body:JSON.stringify(b||{})});
+  let j={};try{j=await r.json()}catch(e){}
+  if(!r.ok)throw Object.assign(new Error(j.error||t('Request failed','Échec de la requête')),{status:r.status,data:j});
+  return j}
+const body=()=>document.getElementById('cob'),comp=()=>document.getElementById('coc');
+const TABS=[['chat',t('Chat','Chat')],['hist',t('History','Historique')],['progs',t('Programs','Programmes')],['prog',t('Progress','Progrès')],['prof',t('Profile','Profil')]];
+const shell=()=>`<div class="ov co-ov" style="background:var(--bg);justify-content:flex-start;padding:16px 14px 0"><div class="co"><div class="row sp" style="margin-bottom:6px"><div><h1 style="margin:0">VIROX Coach</h1><div class="mute sm" id="co-sub" style="margin:2px 0 0"></div></div><button class="chip" data-a="close">${t('Close','Fermer')}</button></div><div class="chips" id="cotabs">${TABS.map(([k,l])=>`<button class="chip" data-a="cotab" data-k="${k}">${l}</button>`).join('')}</div><div id="cob" class="cob"></div><div id="coc"></div></div></div>`;
+function sub(){const s=CO.status,e=document.getElementById('co-sub');if(!e||!s)return;e.textContent=(s.plan=='premium'?'Premium':'Free')+' · '+s.used+'/'+s.limits.msgs+' '+t('messages today','messages aujourd’hui')}
+function gate(m){const b=body();if(!b)return;comp().innerHTML='';b.innerHTML=`<div class="glass"><h2 style="margin-top:0">${t('Your personal AI coach','Ton coach IA personnel')}</h2><p class="mute">${m||t('Sign in with your Google account to chat with the coach, save programs and track your progress.','Connecte-toi avec Google pour discuter avec le coach, sauvegarder des programmes et suivre tes progrès.')}</p><button class="btn w" data-a="cosignin">${t('Continue with Google','Continuer avec Google')}</button></div>`}
+async function openCoach(){
+  L.innerHTML=shell();setTab();
+  if(!(await who(2000))){gate();return}
+  try{CO.status=await api('status');sub()}catch(e){if(e.status==401){gate(e.message);return}}
+  setView(CO.view)}
+function setTab(){document.querySelectorAll('#cotabs .chip').forEach(c=>c.classList.toggle('on',c.dataset.k==CO.view))}
+async function setView(v){
+  CO.view=v;CO.err='';setTab();const b=body();if(!b)return;
+  comp().innerHTML=v=='chat'?`<div class="cin"><textarea id="coin" rows="1" maxlength="1500" placeholder="${t('Ask your coach…','Pose ta question au coach…')}" aria-label="${t('Message','Message')}"></textarea><button class="btn" data-a="cosend" aria-label="${t('Send','Envoyer')}">➤</button></div><div class="mute sm" style="text-align:center;margin:0 0 10px">${t('General guidance, not medical advice.','Conseils généraux, pas un avis médical.')}</div>`:'';
+  if(v=='chat'){paintChat();return}
+  b.innerHTML=`<div class="glass mute">${t('Loading…','Chargement…')}</div>`;
+  try{
+    if(v=='hist'){CO.convs=await api('conversations');vHist()}
+    else if(v=='progs'){if(!CO.profile)CO.profile=(await api('profile-get')).profile;CO.progs=await api('programs');vProgs()}
+    else if(v=='prog'){CO.logs=(await api('logs')).logs;vProg()}
+    else if(v=='prof'){CO.profile=(await api('profile-get')).profile;vProf()}
+  }catch(e){if(e.status==401)gate(e.message);else if(body())body().innerHTML=`<div class="cerr">${esc(e.message)}</div>`}}
+/* ---------- Chat ---------- */
+const SUG=FR?['Crée-moi un programme full body de 3 jours','Comment mieux récupérer entre les séances ?','Explique-moi le squat étape par étape','Que manger après l’entraînement ?']:['Build me a 3-day full-body program','How do I recover better between sessions?','Explain the squat step by step','What should I eat after training?'];
+function paintChat(stick){
+  const b=body();if(!b)return;
+  let h='';
+  if(!CO.msgs.length&&!CO.busy)h=`<div class="glass" style="text-align:center"><h2 style="margin:0 0 4px">${t('How can I help you train today?','Comment puis-je t’aider à t’entraîner ?')}</h2><div class="mute sm" style="margin:0 0 12px">${t('Training, exercises, recovery, nutrition, planning.','Entraînement, exercices, récupération, nutrition, organisation.')}</div><div class="cg">${SUG.map((s,i)=>`<button class="chip" style="white-space:normal;text-align:left" data-a="cosug" data-i="${i}">${esc(s)}</button>`).join('')}</div></div>`;
+  h+=CO.msgs.map(m=>`<div class="cm ${m.r=='user'?'u':'a'}">${md(m.t)}</div>`).join('');
+  if(CO.busy)h+=`<div class="cm a typ" aria-label="${t('Coach is typing','Le coach écrit')}"><i></i><i></i><i></i></div>`;
+  if(CO.err)h+=`<div class="cerr" role="alert">${esc(CO.err)}</div>`;
+  b.innerHTML=h;b.scrollTop=b.scrollHeight}
+async function send(text){
+  text=String(text||'').trim();if(!text||CO.busy)return;
+  CO.busy=true;CO.err='';CO.msgs.push({r:'user',t:text});
+  const inp=document.getElementById('coin');if(inp){inp.value='';inp.style.height='auto'}
+  paintChat();
+  try{
+    const d=await api('chat',{conversation_id:CO.cid,message:text});
+    CO.cid=d.conversation_id;CO.msgs.push({r:'assistant',t:d.reply});
+    if(CO.status){CO.status.used=d.used;CO.status.plan=d.plan;CO.status.limits.msgs=d.limit}sub()
+  }catch(e){
+    CO.msgs.pop();CO.err=e.message+(e.data&&e.data.limit_reached&&CO.status&&CO.status.plan!='premium'?' '+t('Premium unlocks a higher daily limit.','Premium débloque une limite quotidienne plus élevée.'):'');
+    const i2=document.getElementById('coin');if(i2)i2.value=text;
+    if(e.status==401)CO.err=e.message}
+  CO.busy=false;if(CO.view=='chat')paintChat()}
+/* ---------- Historique ---------- */
+function vHist(){
+  const c=CO.convs.conversations;
+  body().innerHTML=`<button class="btn w" data-a="conew">${t('New chat','Nouvelle conversation')}</button><div class="mute sm" style="margin:10px 0">${c.length}/${CO.convs.max} ${t('saved conversations (older ones are replaced as you chat)','conversations gardées (les plus anciennes sont remplacées)')}</div>`+(c.length?c.map(x=>`<div class="glass row sp" style="margin-bottom:8px"><button style="text-align:left;flex:1;min-width:0" data-a="coopen" data-id="${esc(x.id)}"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.title)}</b><span class="mute sm">${new Date(x.updated_at).toLocaleDateString()}</span></button><button class="cdel" data-a="codel" data-id="${esc(x.id)}" aria-label="${t('Delete','Supprimer')}">✕</button></div>`).join(''):`<div class="glass mute">${t('No conversation yet.','Aucune conversation pour l’instant.')}</div>`)}
+/* ---------- Programmes ---------- */
+const sel=(id,vals,cur)=>`<select id="${id}">${vals.map(v=>`<option value="${v}" ${String(cur)==String(v)?'selected':''}>${v}</option>`).join('')}</select>`;
+function vProgs(){
+  if(CO.draft)return vDraft();
+  const p=CO.progs.programs,pr=CO.profile||{};
+  body().innerHTML=`<div class="glass"><h2 style="margin-top:0">${t('Generate with your coach','Générer avec ton coach')}</h2><label>${t('Goal','Objectif')}</label><input type="text" id="cog-goal" maxlength="200" value="${esc(CO.gen.goal??pr.goal??'')}"><label>${t('Equipment','Matériel')}</label><input type="text" id="cog-eq" maxlength="200" value="${esc(CO.gen.eq??pr.equipment??'')}"><div class="row" style="gap:10px"><div style="flex:1"><label>${t('Days / week','Jours / semaine')}</label>${sel('cog-days',[1,2,3,4,5,6],CO.gen.days||3)}</div><div style="flex:1"><label>${t('Minutes / session','Minutes / séance')}</label>${sel('cog-min',[20,30,45,60,75,90],CO.gen.min||60)}</div></div><button class="btn w" style="margin-top:14px" data-a="cogen" ${CO.genBusy?'disabled':''}>${CO.genBusy?t('Generating…','Génération…'):t('Generate program','Générer le programme')}</button><button class="btn ghost w" style="margin-top:8px" data-a="conewprog">${t('Create manually','Créer manuellement')}</button></div><h2>${t('My programs','Mes programmes')} <span class="mute sm">${p.length}/${CO.progs.max}</span></h2>`+(p.length?p.map((x,i)=>`<div class="glass row sp" style="margin-bottom:8px"><button style="text-align:left;flex:1;min-width:0" data-a="coprogopen" data-i="${i}"><b style="display:block">${esc(x.title)}</b><span class="mute sm">${x.days.length} ${t('days','jours')} · ${esc(x.goal||'')}</span></button><button class="cdel" data-a="coprogdel" data-id="${esc(x.id)}" aria-label="${t('Delete','Supprimer')}">✕</button></div>`).join(''):`<div class="glass mute">${t('No saved program yet.','Aucun programme sauvegardé.')}</div>`)}
+function vDraft(){
+  const D=CO.draft.p;
+  body().innerHTML=`<div class="glass"><label style="margin-top:0">${t('Title','Titre')}</label><input type="text" data-pk="title" maxlength="80" value="${esc(D.title)}"><label>${t('Goal','Objectif')}</label><input type="text" data-pk="goal" maxlength="160" value="${esc(D.goal||'')}"></div>`+D.days.map((d,i)=>`<div class="glass" style="margin-top:10px"><div class="row" style="gap:8px"><input type="text" data-pk="dname" data-d="${i}" maxlength="60" value="${esc(d.name)}" aria-label="${t('Day name','Nom du jour')}"><button class="cdel" style="height:44px;flex:none" data-a="corday" data-d="${i}" aria-label="${t('Remove day','Supprimer le jour')}">✕</button></div>`+d.exercises.map((e,j)=>`<div class="cex"><input class="nm" type="text" data-pk="ex" data-f="name" data-d="${i}" data-e="${j}" maxlength="70" value="${esc(e.name)}" aria-label="${t('Exercise','Exercice')}"><input type="number" inputmode="numeric" data-pk="ex" data-f="sets" data-d="${i}" data-e="${j}" value="${esc(e.sets)}" aria-label="${t('Sets','Séries')}" placeholder="${t('Sets','Séries')}"><input type="text" data-pk="ex" data-f="reps" data-d="${i}" data-e="${j}" value="${esc(e.reps)}" aria-label="Reps" placeholder="Reps"><input type="number" inputmode="numeric" data-pk="ex" data-f="rest" data-d="${i}" data-e="${j}" value="${esc(e.rest)}" aria-label="${t('Rest (s)','Repos (s)')}" placeholder="${t('Rest s','Repos s')}"><button class="cdel" data-a="corex" data-d="${i}" data-e="${j}" aria-label="${t('Remove exercise','Supprimer l’exercice')}">✕</button>${e.notes?`<div class="mute sm nm" style="grid-column:1/-1;margin:0">${esc(e.notes)}</div>`:''}</div>`).join('')+`<div class="row" style="margin-top:10px;gap:8px"><button class="chip" data-a="coaddex" data-d="${i}">+ ${t('Exercise','Exercice')}</button><button class="chip" data-a="cologday" data-d="${i}">${t('Log this session','Enregistrer cette séance')}</button></div></div>`).join('')+`<button class="chip" style="margin-top:10px" data-a="coaddday">+ ${t('Add day','Ajouter un jour')}</button><div class="glass" style="margin-top:10px"><label style="margin-top:0">${t('Progression notes','Conseils de progression')}</label><textarea data-pk="notes" rows="3" maxlength="800">${esc(D.notes||'')}</textarea></div><div class="row" style="gap:8px;margin:12px 0"><button class="btn w" data-a="cosaveprog">${t('Save program','Sauvegarder')}</button><button class="btn ghost w" data-a="cocancelprog">${t('Back','Retour')}</button></div>`}
+const emptyProg=()=>({title:t('My program','Mon programme'),goal:'',notes:'',days:[{name:t('Day 1','Jour 1'),exercises:[{name:'',sets:3,reps:'10',rest:90,notes:''}]}]});
+async function genProg(){
+  const g=document.getElementById('cog-goal'),q=document.getElementById('cog-eq'),dy=document.getElementById('cog-days'),mn=document.getElementById('cog-min');
+  CO.gen={goal:g.value,eq:q.value,days:+dy.value,min:+mn.value};CO.genBusy=true;vProgs();
+  try{const d=await api('program-generate',{goal:CO.gen.goal,equipment:CO.gen.eq,days:CO.gen.days,minutes:CO.gen.min,lang:FR?'fr':'en'});CO.draft={id:null,p:d.program};if(CO.status){CO.status.used=d.used;sub()}}
+  catch(e){toast(e.message)}
+  CO.genBusy=false;if(CO.view=='progs')vProgs()}
+/* ---------- Suivi ---------- */
+const wk=d=>{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()-((x.getDay()+6)%7));return x.getTime()};
+function barChart(logs){
+  const now=new Date();now.setHours(0,0,0,0);now.setDate(now.getDate()-((now.getDay()+6)%7));
+  const keys=[];for(let i=7;i>=0;i--){const x=new Date(now);x.setDate(x.getDate()-7*i);keys.push(x.getTime())}
+  const c=keys.map(k=>logs.filter(l=>l.kind=='session'&&wk(l.date)==k).length),m=Math.max(1,...c);
+  return `<svg viewBox="0 0 320 120" width="100%" role="img" aria-label="${t('Sessions per week','Séances par semaine')}">`+c.map((v,i)=>{const h=Math.round(v/m*70),x=10+i*38,dt=new Date(keys[i]);return `<rect x="${x}" y="${90-h}" width="28" height="${Math.max(h,2)}" rx="8" style="fill:var(--em);opacity:${v?1:.25}"/><text x="${x+14}" y="${84-h}" text-anchor="middle" font-size="11" style="fill:var(--ink)">${v||''}</text><text x="${x+14}" y="108" text-anchor="middle" font-size="9.5" style="fill:var(--mute)">${dt.getDate()}/${dt.getMonth()+1}</text>`}).join('')+`</svg>`}
+function lineChart(pts){
+  if(pts.length<2)return `<div class="mute sm">${t('Log at least two sessions of this lift to see the curve.','Enregistre au moins deux séances de cet exercice pour voir la courbe.')}</div>`;
+  const ys=pts.map(p=>p.w),lo=Math.min(...ys),hi=Math.max(...ys),r=hi-lo||1,X=i=>20+i*(280/(pts.length-1)),Y=v=>90-(v-lo)/r*70;
+  return `<svg viewBox="0 0 320 120" width="100%" role="img" aria-label="${t('Weight over time','Charge dans le temps')}"><polyline fill="none" stroke-width="2.5" stroke-linejoin="round" style="stroke:var(--em)" points="${pts.map((p,i)=>X(i)+','+Y(p.w)).join(' ')}"/>`+pts.map((p,i)=>`<circle cx="${X(i)}" cy="${Y(p.w)}" r="4" style="fill:var(--em)"/>`).join('')+`<text x="20" y="112" font-size="9.5" style="fill:var(--mute)">${esc(pts[0].d)}</text><text x="300" y="112" text-anchor="end" font-size="9.5" style="fill:var(--mute)">${esc(pts[pts.length-1].d)}</text><text x="20" y="12" font-size="10" style="fill:var(--mute)">${hi} kg</text><text x="20" y="102" font-size="10" style="fill:var(--mute)">${lo} kg</text></svg>`}
+function vProg(){
+  const lg=CO.logs,ses=lg.filter(l=>l.kind=='session'),lifts=lg.filter(l=>l.kind=='lift'),
+    ago=n=>{const x=new Date();x.setDate(x.getDate()-n);return x.toLocaleDateString('en-CA')},
+    n7=ses.filter(l=>l.date>=ago(6)).length,n30=ses.filter(l=>l.date>=ago(29)).length,
+    names=[...new Set(lifts.map(l=>l.exercise))];
+  if(!CO.lift||!names.includes(CO.lift))CO.lift=names[0]||'';
+  const byDay={};lifts.filter(l=>l.exercise==CO.lift).forEach(l=>{byDay[l.date]=Math.max(byDay[l.date]||0,l.weight)});
+  const pts=Object.keys(byDay).sort().map(d=>({d,w:byDay[d]})),delta=pts.length>1?pts[pts.length-1].w-pts[0].w:0;
+  body().innerHTML=`<div class="glass" style="display:grid;grid-template-columns:repeat(3,1fr);text-align:center"><div><b style="font-size:26px">${n7}</b><div class="mute sm">${t('Last 7 days','7 jours')}</div></div><div><b style="font-size:26px">${n30}</b><div class="mute sm">${t('Last 30 days','30 jours')}</div></div><div><b style="font-size:26px">${ses.length}</b><div class="mute sm">${t('Total sessions','Total séances')}</div></div></div>
+<div class="glass" style="margin-top:10px"><h2 style="margin-top:0">${t('Sessions per week','Séances par semaine')}</h2>${barChart(lg)}</div>
+<div class="glass" style="margin-top:10px"><h2 style="margin-top:0">${t('Lift progress','Progression des charges')}</h2>${names.length?`<select id="co-lift" data-a="colift">${names.map(n=>`<option ${n==CO.lift?'selected':''}>${esc(n)}</option>`).join('')}</select><div style="margin-top:10px">${lineChart(pts)}</div>${pts.length>1?`<div class="mute sm">${delta>=0?'+':''}${delta} kg ${t('since first entry','depuis la première entrée')}</div>`:''}`:`<div class="mute sm">${t('No lift logged yet.','Aucune charge enregistrée.')}</div>`}</div>
+<div class="glass" style="margin-top:10px"><h2 style="margin-top:0">${t('Log a session','Enregistrer une séance')}</h2><input type="text" id="cl-title" maxlength="80" placeholder="${t('Title (e.g. Push day)','Titre (ex. Push)')}"><div class="row" style="gap:8px;margin-top:8px"><input type="number" id="cl-min" inputmode="numeric" placeholder="${t('Minutes','Minutes')}"><input type="text" id="cl-notes" maxlength="300" placeholder="Notes"></div><button class="btn w" style="margin-top:10px" data-a="cologsess">${t('Save session','Enregistrer')}</button></div>
+<div class="glass" style="margin-top:10px"><h2 style="margin-top:0">${t('Log a lift','Enregistrer une charge')}</h2><input type="text" id="cl-ex" list="cl-exl" maxlength="70" placeholder="${t('Exercise (e.g. Bench press)','Exercice (ex. Développé couché)')}"><datalist id="cl-exl">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist><div class="row" style="gap:8px;margin-top:8px"><input type="number" id="cl-w" inputmode="decimal" step="0.5" placeholder="kg"><input type="number" id="cl-r" inputmode="numeric" placeholder="Reps"><input type="number" id="cl-s" inputmode="numeric" placeholder="${t('Sets','Séries')}"></div><button class="btn w" style="margin-top:10px" data-a="cologlift">${t('Save lift','Enregistrer')}</button></div>
+<h2>${t('History','Historique')}</h2>`+(lg.length?lg.slice(0,20).map(l=>`<div class="glass row sp" style="margin-bottom:8px"><div style="min-width:0"><b>${esc(l.kind=='lift'?l.exercise:l.title)}</b><div class="mute sm">${esc(l.date)} · ${l.kind=='lift'?l.weight+' kg × '+l.reps+' × '+l.sets:(l.minutes?l.minutes+' min':'')+(l.notes?' · '+esc(l.notes):'')}</div></div><button class="cdel" data-a="coldel" data-id="${esc(l.id)}" aria-label="${t('Delete','Supprimer')}">✕</button></div>`).join(''):`<div class="glass mute">${t('Nothing logged yet.','Rien d’enregistré pour l’instant.')}</div>`)}
+async function addLog(kind){
+  const v=id=>(document.getElementById(id)||{}).value||'';
+  const b=kind=='lift'?{kind,exercise:v('cl-ex'),weight:v('cl-w'),reps:v('cl-r'),sets:v('cl-s'),date:today()}:{kind,title:v('cl-title'),minutes:v('cl-min'),notes:v('cl-notes'),date:today()};
+  try{await api('log-add',b);toast(t('Saved.','Enregistré.'));CO.logs=(await api('logs')).logs;if(CO.view=='prog')vProg()}catch(e){toast(e.message)}}
+/* ---------- Profil ---------- */
+function vProf(){
+  const p=CO.profile||{},lv=[['beginner',t('Beginner','Débutant')],['intermediate',t('Intermediate','Intermédiaire')],['advanced',t('Advanced','Avancé')]];
+  body().innerHTML=`<div class="glass"><p class="mute sm" style="margin-top:0">${t('The coach uses this to adapt its advice. Everything is optional and stored in your VIROX account.','Le coach s’en sert pour adapter ses conseils. Tout est facultatif et stocké dans ton compte VIROX.')}</p><label>${t('Goal','Objectif')}</label><input type="text" id="cp-goal" maxlength="200" value="${esc(p.goal||'')}" placeholder="${t('e.g. build muscle, lose fat, run 10 km','ex. prendre du muscle, perdre du gras, courir 10 km')}"><label>${t('Level','Niveau')}</label><div class="chips">${lv.map(([k,l])=>`<button class="chip ${CO.pl==k||(!CO.pl&&p.level==k)?'on':''}" data-a="colevel" data-v="${k}">${l}</button>`).join('')}</div><label>${t('Preferred activities','Activités préférées')}</label><input type="text" id="cp-act" maxlength="200" value="${esc(p.activities||'')}"><label>${t('Available equipment','Matériel disponible')}</label><input type="text" id="cp-eq" maxlength="200" value="${esc(p.equipment||'')}" placeholder="${t('gym, dumbbells, bands, none…','salle, haltères, élastiques, aucun…')}"><label>${t('Availability','Disponibilités')}</label><input type="text" id="cp-av" maxlength="200" value="${esc(p.availability||'')}" placeholder="${t('e.g. 4 days/week, 45 min','ex. 4 jours/semaine, 45 min')}"><label>${t('Physical limitations (optional)','Limitations physiques (facultatif)')}</label><input type="text" id="cp-li" maxlength="300" value="${esc(p.limitations||'')}"><button class="btn w" style="margin-top:14px" data-a="cosaveprof">${t('Save profile','Sauvegarder le profil')}</button></div>`}
+/* ---------- Événements ---------- */
+document.addEventListener('input',e=>{
+  const x=e.target;
+  if(x.id=='coin'){x.style.height='auto';x.style.height=Math.min(x.scrollHeight,120)+'px';return}
+  const k=x.dataset&&x.dataset.pk;if(!k||!CO.draft)return;const D=CO.draft.p;
+  if(k=='title'||k=='goal'||k=='notes')D[k]=x.value;
+  else if(k=='dname')D.days[+x.dataset.d].name=x.value;
+  else if(k=='ex')D.days[+x.dataset.d].exercises[+x.dataset.e][x.dataset.f]=x.value});
+document.addEventListener('keydown',e=>{if(e.target.id=='coin'&&e.key=='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send(e.target.value)}});
+document.addEventListener('change',e=>{if(e.target.id=='co-lift'){CO.lift=e.target.value;vProg()}});
+const act6=act;
+act=function(a,d,el){
+  switch(a){
+    case'coach':openCoach();return;
+    case'cotab':CO.draft=null;setView(d.k);return;
+    case'cosignin':if(window.VXAuth)window.VXAuth.signIn().then(()=>openCoach()).catch(e=>toast(e.message||'Sign-in failed'));else toast(t('Authentication is loading.','Authentification en cours de chargement.'));return;
+    case'cosend':send((document.getElementById('coin')||{}).value);return;
+    case'cosug':send(SUG[+d.i]);return;
+    case'conew':CO.cid=null;CO.msgs=[];setView('chat');return;
+    case'coopen':api('conversation',{id:d.id}).then(r=>{CO.cid=r.id;CO.msgs=r.messages.map(m=>({r:m.r,t:m.t}));setView('chat')}).catch(e=>toast(e.message));return;
+    case'codel':api('conversation-delete',{id:d.id}).then(()=>{if(CO.cid==d.id){CO.cid=null;CO.msgs=[]}setView('hist')}).catch(e=>toast(e.message));return;
+    case'cogen':genProg();return;
+    case'conewprog':CO.draft={id:null,p:emptyProg()};vProgs();return;
+    case'coprogopen':{const x=CO.progs.programs[+d.i];CO.draft={id:x.id,p:JSON.parse(JSON.stringify({title:x.title,goal:x.goal,notes:x.notes,days:x.days}))};vProgs();return}
+    case'coprogdel':api('program-delete',{id:d.id}).then(()=>setView('progs')).catch(e=>toast(e.message));return;
+    case'coaddex':CO.draft.p.days[+d.d].exercises.push({name:'',sets:3,reps:'10',rest:90,notes:''});vProgs();return;
+    case'corex':CO.draft.p.days[+d.d].exercises.splice(+d.e,1);vProgs();return;
+    case'coaddday':CO.draft.p.days.push({name:t('Day ','Jour ')+(CO.draft.p.days.length+1),exercises:[{name:'',sets:3,reps:'10',rest:90,notes:''}]});vProgs();return;
+    case'corday':CO.draft.p.days.splice(+d.d,1);vProgs();return;
+    case'cocancelprog':CO.draft=null;setView('progs');return;
+    case'cosaveprog':{const D=CO.draft.p;D.days.forEach(x=>x.exercises=x.exercises.filter(e=>String(e.name).trim()));D.days=D.days.filter(x=>x.exercises.length);
+      if(!D.days.length){toast(t('Add at least one exercise.','Ajoute au moins un exercice.'));D.days=[{name:t('Day 1','Jour 1'),exercises:[{name:'',sets:3,reps:'10',rest:90,notes:''}]}];vProgs();return}
+      api('program-save',{id:CO.draft.id,program:D}).then(r=>{CO.draft=null;toast(t('Program saved.','Programme sauvegardé.'));setView('progs')}).catch(e=>{toast(e.message);vProgs()});return}
+    case'cologday':{const D=CO.draft.p,day=D.days[+d.d];api('log-add',{kind:'session',title:D.title+' — '+day.name,program_id:CO.draft.id||'',date:today()}).then(()=>toast(t('Session logged.','Séance enregistrée.'))).catch(e=>toast(e.message));return}
+    case'cologsess':addLog('session');return;
+    case'cologlift':addLog('lift');return;
+    case'coldel':api('log-delete',{id:d.id}).then(()=>api('logs')).then(r=>{CO.logs=r.logs;vProg()}).catch(e=>toast(e.message));return;
+    case'colevel':CO.pl=d.v;document.querySelectorAll('[data-a=colevel]').forEach(c=>c.classList.toggle('on',c.dataset.v==d.v));return;
+    case'cosaveprof':{const v=id=>(document.getElementById(id)||{}).value||'';
+      api('profile-set',{goal:v('cp-goal'),level:CO.pl||(CO.profile&&CO.profile.level)||'',activities:v('cp-act'),equipment:v('cp-eq'),availability:v('cp-av'),limitations:v('cp-li')}).then(r=>{CO.profile=r.profile;CO.pl=null;toast(t('Profile saved.','Profil sauvegardé.'))}).catch(e=>toast(e.message));return}
+  }
+  act6(a,d,el)};
+/* Carte d'accès sur l'accueil (masquée si le propriétaire désactive le coach) */
+const home1=home;
+home=function(){let off=false;try{off=SRV.coach_enabled===false}catch(e){}
+  return (off?'':`<div class="glass" style="grid-column:1/-1;padding:16px;border-radius:24px"><div class="row sp"><div><h2 style="margin:0">VIROX Coach</h2><div class="mute sm" style="margin:3px 0 0">${t('Your personal AI coach: advice, programs, progress.','Ton coach IA : conseils, programmes, progrès.')}</div></div><button class="btn" data-a="coach">${t('Open','Ouvrir')}</button></div></div>`)+home1()};
+if(location.hash=='#coach')setTimeout(openCoach,400);
+render();
+})();
+</script>
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 const status=document.getElementById("vx-account-status");

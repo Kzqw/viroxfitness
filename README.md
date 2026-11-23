@@ -49,17 +49,28 @@ Publish the contents of `firestore.rules` in Firebase Console → Firestore Data
 - The dashboard does not report Stripe/App Store revenue. A payment provider, server-side checkout, webhook signature verification, refunds and subscription lifecycle handling must be implemented before taking payments.
 - Test the branch preview and complete the Firebase setup before merging it into `main`. Netlify automatically publishes `main`.
 
+## AI Coach (`coach-api.mjs`)
 
-## VIROX AI Coach
+Everything runs server-side: the browser only sends a Firebase ID token to `/api/coach-api`. No AI key is ever in the HTML/JS.
 
-The dashboard includes a VIROX AI Coach entry point. The server-side Netlify Function is `netlify/functions/coach-api.mjs`; the browser calls `/api/coach-api` and never receives the provider key.
+### Netlify environment variables
+- `AI_API_KEY` — key of your AI provider (required)
+- `AI_PROVIDER` — `gemini` (default) or `openai` (any OpenAI-compatible API: Groq, OpenRouter, Mistral…)
+- `AI_MODEL` — optional; defaults to `gemini-2.5-flash` / `llama-3.3-70b-versatile`. Check in Google AI Studio (or your provider) which model your free tier currently allows and set it here.
+- `AI_BASE_URL` — only for `openai`; defaults to Groq (`https://api.groq.com/openai/v1`)
+- `COACH_FREE_DAILY` / `COACH_PREMIUM_DAILY` — optional daily message limits (default 8 / 100)
 
-Add these variables in Netlify → Site configuration → Environment variables:
+### Plans (decided on the server from Firestore, never from the browser)
+| | Free | Premium (and OWNER) |
+|---|---|---|
+| Messages + program generations / day | 8 | 100 |
+| Saved conversations | 5 | 100 |
+| Saved programs | 2 | 30 |
 
-- `AI_API_KEY` — your Gemini API key or Groq API key.
-- `AI_PROVIDER` — optional. Use `gemini` for Google AI Studio (default), or `openai` for Groq's OpenAI-compatible API.
+A 2.5 s minimum delay between AI requests limits abuse; a failed AI call refunds the quota and returns an error (no fake answer).
+The owner can switch the whole coach off from Control Center → Settings → "AI Coach available".
 
-For Groq, set `AI_PROVIDER=openai`. For Gemini, set `AI_PROVIDER=gemini` or leave it unset. After changing environment variables, trigger a new Netlify deploy.
-
-The current server-side limits are 5 messages/day for free accounts and 40 messages/day for valid Premium accounts. Conversations are stored under each authenticated user's Firestore record. The coach requires a verified Google sign-in. Never commit API keys to GitHub or paste them into chat.
-
+### Deployment notes
+- Netlify synchronous functions time out at about 10 s by default; the AI call is capped at 9 s. If program generation times out on your plan, use a faster model.
+- Firestore collections created automatically: `coach_profiles`, `coach_conversations`, `coach_programs`, `coach_logs`, `coach_usage`. The rules still deny all browser access.
+- The coach UI is in French or English depending on the browser language; the coach replies in the language of the user's message.

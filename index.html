@@ -106,6 +106,10 @@ const hist=[['Push','Yesterday','52 min','8,450 kg',['Chest','Shoulders','Tricep
 return`<div class="hd"><div><div class="mute sm" style="letter-spacing:.06em">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</div><div style="font:200 24px/1.1 Outfit;color:var(--mute);margin-top:12px">${gr}</div><h1 style="font-size:42px;letter-spacing:-.04em;margin:0 0 2px">${S.name}</h1><button class="pp" data-a="pro">${ic('crown')}PRO</button></div><div class="row" style="gap:12px"><button class="ibtn" data-a="bell">${ic('bell')}<i></i></button><button class="av" data-a="tab" data-k="user">${S.name[0]}</button></div></div>
 <div class="glass hero"><svg class="ill" viewBox="0 0 240 220"><defs><radialGradient id="pl" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#6f9285"/><stop offset=".55" stop-color="#1c2d27"/><stop offset="1" stop-color="#060c0a"/></radialGradient><linearGradient id="br" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1fff9"/><stop offset=".35" stop-color="#7ea597"/><stop offset=".7" stop-color="#1a2b25"/><stop offset="1" stop-color="#5f8578"/></linearGradient><linearGradient id="rm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2be3a0"/><stop offset="1" stop-color="#2be3a0" stop-opacity="0"/></linearGradient><radialGradient id="gw"><stop offset="0" stop-color="#2be3a0" stop-opacity=".42"/><stop offset="1" stop-color="#2be3a0" stop-opacity="0"/></radialGradient><filter id="bl"><feGaussianBlur stdDeviation="4"/></filter></defs><circle cx="120" cy="105" r="100" fill="url(#gw)"><animate attributeName="r" values="92;104;92" dur="3.2s" repeatCount="indefinite"/></circle><circle cx="120" cy="105" r="92" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" transform="rotate(-90 120 105)" stroke-dasharray="30 548"><animate attributeName="stroke-dasharray" values="30 548;330 248;30 548" dur="3.2s" repeatCount="indefinite"/></circle><ellipse cx="120" cy="196" rx="70" ry="9" fill="#000" opacity=".5" filter="url(#bl)"><animate attributeName="rx" values="70;56;70" dur="3.2s" repeatCount="indefinite"/></ellipse><g><animateTransform attributeName="transform" type="translate" values="0 6;0 -8;0 6" dur="3.2s" repeatCount="indefinite"/><g transform="rotate(-20 120 105)"><rect x="40" y="100" width="160" height="11" rx="5.5" fill="url(#br)"/><rect x="44" y="102" width="152" height="2" rx="1" fill="#fff" opacity=".5"/><rect x="36" y="76" width="16" height="58" rx="7" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.2"/><rect x="52" y="62" width="22" height="86" rx="9" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.5"/><rect x="74" y="94" width="8" height="22" rx="3" fill="url(#br)"/><path d="M57 72q5-7 12 0" fill="none" stroke="#fff" opacity=".4" stroke-width="2" stroke-linecap="round"/><rect x="188" y="76" width="16" height="58" rx="7" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.2"/><rect x="166" y="62" width="22" height="86" rx="9" fill="url(#pl)" stroke="url(#rm)" stroke-width="1.5"/><rect x="158" y="94" width="8" height="22" rx="3" fill="url(#br)"/><path d="M171 72q5-7 12 0" fill="none" stroke="#fff" opacity=".4" stroke-width="2" stroke-linecap="round"/></g></g></svg>
 <div class="mute sm">Up next · 6:30 PM</div><h1 style="font-size:38px;margin:6px 0 0">Pull Day</h1><div class="mute">Back · Biceps</div><div class="row sm" style="margin:16px 0 26px"><span class="mp">55 min</span><span class="mp">6 exercises</span></div><button class="btn start" data-a="start" data-t="Pull"><span class="pl">${ic('play')}</span>Start workout</button></div>
+<div class="glass" style="background:radial-gradient(90% 120% at 100% 0,rgba(43,227,160,.18),transparent 65%),var(--gl);padding:18px">
+  <div class="row sp"><div><div class="tag" style="color:var(--em)">VIROX AI</div><h2 style="margin:10px 0 4px">Your personal coach</h2><div class="mute sm">Get guidance, build a routine and stay consistent.</div></div><span style="font-size:28px;color:var(--em)">✦</span></div>
+  <button class="btn w" style="margin-top:14px" data-a="coach">Chat with your AI coach</button>
+</div>
 <div class="glass stats"><div><b data-n="3">0</b><small>/4</small><div class="mute sm">Sessions</div></div><div><b data-n="12.4" data-d="1">0</b><small> t</small><div class="mute sm">Volume</div></div><div><b data-n="${(S.water*.3).toFixed(1)}" data-d="1">0</b><small> L</small><div class="mute sm">Hydration</div></div></div>
 <div class="glass"><div class="row sp"><h2>This week</h2><span class="mute sm">4h 25m</span></div><div id="wk">${wk()}</div></div>
 <div class="glass"><h2>Recovery</h2><div class="rings">${ring('Chest',92)}${ring('Back',58)}${ring('Legs',100)}${ring('Shoulders',74)}</div></div>
@@ -147,6 +151,77 @@ L.innerHTML=`<div class="ov cine ${s=='ob'?'':''}">${s=='ob'?'':pts()}${h}</div>
 function tick(){if(W.rest>0){W.rest--;const t=$('#rt');if(t){t.textContent=Math.floor(W.rest/60)+':'+String(W.rest%60).padStart(2,'0');$('#rc').style.strokeDashoffset=213.6*(1-W.rest/W.max)}if(!W.rest){$('#rbox')&&$('#rbox').remove();toast('Rest over: next set.');buzz()}}}
 setInterval(()=>tick(),1000);
 function restBox(){const o=$('#rbox');o&&o.remove();if(!W.rest)return;const d=document.createElement('div');d.id='rbox';d.className='glass rest';d.innerHTML=`<svg width="48" height="48" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="var(--gb)" stroke-width="6"/><circle id="rc" cx="40" cy="40" r="34" fill="none" stroke="var(--em)" stroke-width="6" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="0" transform="rotate(-90 40 40)" style="transition:stroke-dashoffset 1s linear"/></svg><div style="flex:1"><div class="mute sm">Rest</div><b id="rt" style="font:600 22px Outfit">1:30</b></div><button class="chip" data-a="skip">Skip</button>`;$('#app').appendChild(d)}
+
+let COACH = { threadId: null, messages: [], busy: false, threads: [] };
+const coachEscape = value => String(value || "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function coachRequest(action, payload = {}) {
+  const token = window.VXAuth ? await window.VXAuth.token() : "";
+  if (!token) throw new Error("Sign in with Google to use your AI coach.");
+  const response = await fetch("/api/coach-api?action=" + encodeURIComponent(action), {
+    method: "POST", headers: { "content-type": "application/json", authorization: "Bearer " + token },
+    body: JSON.stringify(payload)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Coach request failed");
+  return data;
+}
+function coachDraw() {
+  const list = document.getElementById("vx-coach-messages");
+  if (!list) return;
+  list.innerHTML = COACH.messages.map(m => '<div style="display:flex;justify-content:' + (m.role === "assistant" ? "flex-start" : "flex-end") + ';margin:10px 0"><div style="max-width:88%;padding:12px 14px;border-radius:18px;background:' + (m.role === "assistant" ? "var(--gl)" : "rgba(43,227,160,.16)") + ';border:1px solid var(--gb);white-space:pre-wrap;overflow-wrap:anywhere">' + coachEscape(m.content) + '</div></div>').join("");
+  list.scrollTop = list.scrollHeight;
+  const send = document.getElementById("vx-coach-send");
+  if (send) { send.disabled = COACH.busy; send.textContent = COACH.busy ? "Thinking…" : "Send"; }
+}
+function coachShell() {
+  L.innerHTML = '<div class="ov" style="background:var(--bg);overflow-y:auto;padding:18px 12px 28px;justify-content:flex-start"><div class="sheet" style="width:100%;max-width:650px;margin:0 auto;border-radius:28px;max-height:none;min-height:80vh;padding:20px 16px"><div class="row sp"><div><div class="tag" style="color:var(--em)">VIROX AI COACH</div><h1 style="font-size:27px;margin-top:10px">Your training partner</h1><div class="mute sm">Supportive, practical guidance for your fitness journey.</div></div><button class="chip" data-a="close">Close</button></div><div id="vx-coach-history" class="chips" style="margin-top:14px"></div><div id="vx-coach-messages" class="glass" style="height:42vh;min-height:260px;overflow-y:auto;padding:12px;margin-top:12px"></div><div style="margin-top:12px"><textarea id="vx-coach-input" rows="3" maxlength="3000" placeholder="Ask about training, exercises or recovery…" style="width:100%;resize:vertical;padding:14px;border-radius:18px;border:1px solid var(--gb);background:var(--gl);color:var(--ink);font:inherit;outline:none"></textarea><div class="row sp" style="margin-top:10px"><div id="vx-coach-status" class="mute sm">Free plan: 5 messages per day</div><button class="btn" id="vx-coach-send" data-a="coach-send">Send</button></div></div><div class="mute sm" style="margin-top:14px">General fitness guidance only. For pain, injury or health concerns, speak with a qualified professional.</div></div></div>';
+  coachDraw();
+}
+async function openCoach() {
+  if (!window.VXAuth?.user) { toast("Sign in with Google from your Profile to use the AI coach."); S.tab = "user"; render(); return; }
+  COACH = { threadId: null, messages: [], busy: false, threads: [] };
+  coachShell();
+  try {
+    const data = await coachRequest("history");
+    COACH.threads = data.threads || [];
+    const status = document.getElementById("vx-coach-status");
+    if (status) status.textContent = (data.premium ? "PRO" : "Free plan") + " · " + data.dailyLimit + " messages per day";
+    const history = document.getElementById("vx-coach-history");
+    if (history) history.innerHTML = '<button class="chip on" data-a="coach-new">New chat</button>' + COACH.threads.map(t => '<button class="chip" data-a="coach-open" data-id="' + coachEscape(t.id) + '">' + coachEscape(t.title) + '</button>').join("");
+    if (COACH.threads.length) { COACH.threadId = COACH.threads[0].id; COACH.messages = COACH.threads[0].messages || []; }
+    else COACH.messages = [{ role: "assistant", content: "Hi! I’m your VIROX coach. Tell me your training goal, experience level and available equipment, and we’ll build a sensible plan together." }];
+    coachDraw();
+  } catch (error) {
+    const status = document.getElementById("vx-coach-status");
+    if (status) status.textContent = error.message;
+  }
+}
+async function coachSend() {
+  const input = document.getElementById("vx-coach-input");
+  if (!input || COACH.busy) return;
+  const message = input.value.trim();
+  if (!message) return;
+  COACH.messages.push({ role: "user", content: message });
+  input.value = "";
+  COACH.busy = true;
+  coachDraw();
+  try {
+    const data = await coachRequest("chat", { message, threadId: COACH.threadId });
+    COACH.threadId = data.threadId;
+    COACH.messages.push({ role: "assistant", content: data.reply });
+    const status = document.getElementById("vx-coach-status");
+    if (status) status.textContent = (data.premium ? "PRO" : "Free plan") + " · " + data.remaining + " messages left today";
+  } catch (error) { COACH.messages.push({ role: "assistant", content: error.message }); }
+  finally { COACH.busy = false; coachDraw(); }
+}
+function coachOpenThread(id) {
+  const thread = COACH.threads.find(t => t.id === id);
+  if (!thread) return;
+  COACH.threadId = thread.id;
+  COACH.messages = thread.messages || [];
+  coachDraw();
+}
+
 function act(a,d,el){buzz();switch(a){
 case'tab':S.tab=d.k;render();break;
 case'start':W.type=d.t;W.on=true;W.ex=TY[d.t].map(mk);S.tab='work';render();break;
@@ -160,7 +235,8 @@ case'finish':{const k=W.ex.reduce((t,e)=>t+e.sets.filter(s=>s.d).length,0);W.on=
 case'g':S.g=d.g;render();break;case'met':S.met=d.m;render();break;
 case'day':{S.day=+d.i;const w=$('#wk');w.querySelector('.tip').innerHTML=tipH();w.querySelectorAll('.bars button').forEach((b,j)=>b.classList.toggle('sel',j==S.day));break}
 case'bell':toast('No new notifications.');break;
-case'exd':exd(d.i);break;case'pro':pro();break;case'nut':nut();break;case'close':L.innerHTML='';break;
+case'exd':exd(d.i);break;case'pro':pro();break;case'nut':nut();break;
+case'coach':openCoach();break;case'coach-send':coachSend();break;case'coach-new':COACH.threadId=null;COACH.messages=[];coachDraw();break;case'coach-open':coachOpenThread(d.id);break;case'close':L.innerHTML='';break;
 case'addto':{const n=EX[d.i][0];if(!W.on){W.on=true;W.ex=[]}W.ex.push(mk(n));S.tab='work';L.innerHTML='';render();break}
 case'wat':S.water=S.water==+d.i+1?+d.i:+d.i+1;nut();break;
 case'buy':toast('Design preview: real payment will go through StoreKit 2 in the native app. No purchase is simulated.');break;

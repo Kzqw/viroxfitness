@@ -11,6 +11,12 @@ export default async function handler(request) {
     const ref = db.collection("users").doc(user.uid);
     const snapshot = await ref.get();
     const previous = snapshot.exists ? snapshot.data() : {};
+    if (!snapshot.exists && role !== "OWNER") {
+      const pub = await db.collection("settings").doc("public").get();
+      if (pub.exists && pub.data().signups_open === false) {
+        return json({ error: "New sign-ups are currently closed" }, 403);
+      }
+    }
     const blocked = previous.access_blocked === true;
     if (blocked) {
       try { await auth.revokeRefreshTokens(user.uid); } catch {}

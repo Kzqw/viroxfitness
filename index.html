@@ -525,4 +525,61 @@ try{
   if(status)status.textContent=error.message;
   const btn=accountButton();if(btn){btn.disabled=true;btn.textContent="Account setup required"}
 }
-</script></body></html>
+</script>
+<style>
+#vx-coach-launch{position:absolute;z-index:9;right:18px;bottom:calc(var(--dockh,92px) + 26px);display:flex;align-items:center;gap:9px;padding:12px 17px;border-radius:999px;color:#041a12;background:linear-gradient(135deg,#b8ffe1,#2be3a0 58%,#0b8f63);font:700 13px Outfit,sans-serif;box-shadow:0 12px 34px -12px rgba(43,227,160,.8),inset 0 1px 0 #fff}
+#vx-coach-launch svg{width:19px;height:19px}
+#vx-coach-panel{position:absolute;inset:0;z-index:30;display:none;flex-direction:column;padding:16px;background:rgba(1,8,6,.72);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+#vx-coach-panel.open{display:flex}
+#vx-coach-card{display:flex;flex-direction:column;min-height:0;flex:1;max-width:560px;width:100%;margin:auto;border:1px solid rgba(255,255,255,.17);border-radius:30px;background:linear-gradient(150deg,rgba(26,60,48,.97),rgba(4,13,10,.98));box-shadow:0 30px 90px rgba(0,0,0,.6);overflow:hidden;color:#ecfff7}
+#vx-coach-head{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+#vx-coach-log{flex:1;min-height:180px;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.vx-msg{max-width:88%;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);white-space:pre-wrap;line-height:1.5;font-size:14px}
+.vx-msg.user{align-self:flex-end;background:rgba(43,227,160,.15);border-color:rgba(43,227,160,.28)}
+.vx-msg.assistant{align-self:flex-start}
+#vx-coach-compose{padding:14px;border-top:1px solid rgba(255,255,255,.1);display:flex;gap:9px}
+#vx-coach-input{flex:1;min-width:0;resize:none;border:1px solid rgba(255,255,255,.16);border-radius:17px;padding:12px 14px;background:rgba(255,255,255,.07);color:#ecfff7;font:14px Outfit;outline:none}
+#vx-coach-send{border-radius:16px;padding:0 17px;background:#2be3a0;color:#041a12;font-weight:700}
+#vx-coach-send:disabled{opacity:.5}
+@media(min-width:700px){#vx-coach-panel{padding:28px}#vx-coach-card{max-height:820px}}
+</style>
+<button id="vx-coach-launch" type="button" aria-label="Open VIROX AI Coach">✦ AI COACH</button>
+<section id="vx-coach-panel" aria-label="VIROX AI Coach" aria-modal="true" role="dialog">
+ <div id="vx-coach-card">
+  <header id="vx-coach-head">
+   <div class="row sp"><div><div style="font-size:11px;letter-spacing:.2em;color:#8cefc4;font-weight:700">VIROX INTELLIGENCE</div><h1 style="font-size:25px;margin:5px 0">Your AI Coach</h1><div style="font-size:12px;color:#a9cbbd">Training guidance · Progress · Recovery</div></div><button id="vx-coach-close" class="ibtn" type="button" aria-label="Close">✕</button></div>
+  </header>
+  <div id="vx-coach-log"><div class="vx-msg assistant">Hi! I'm your VIROX Coach. I can help you understand exercises, plan balanced sessions and build consistent habits. What would you like help with?</div></div>
+  <form id="vx-coach-compose"><textarea id="vx-coach-input" rows="1" maxlength="1200" placeholder="Ask your Coach…" required></textarea><button id="vx-coach-send" type="submit">Send</button></form>
+  <div style="padding:0 16px 14px;font-size:11px;color:#8da99d">General fitness education only. Not medical advice. 12 messages per day.</div>
+ </div>
+</section>
+<script>
+(()=>{
+ const panel=document.getElementById('vx-coach-panel'),launch=document.getElementById('vx-coach-launch'),close=document.getElementById('vx-coach-close'),form=document.getElementById('vx-coach-compose'),input=document.getElementById('vx-coach-input'),log=document.getElementById('vx-coach-log'),send=document.getElementById('vx-coach-send');
+ if(!panel||!launch)return;
+ let messages=[],busy=false;
+ const add=(role,content)=>{const el=document.createElement('div');el.className='vx-msg '+role;el.textContent=content;log.appendChild(el);log.scrollTop=log.scrollHeight;return el};
+ const open=()=>{panel.classList.add('open');input.focus()};
+ const shut=()=>panel.classList.remove('open');
+ launch.addEventListener('click',open);close.addEventListener('click',shut);
+ panel.addEventListener('click',e=>{if(e.target===panel)shut()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')shut()});
+ form.addEventListener('submit',async e=>{
+  e.preventDefault();if(busy)return;
+  const content=input.value.trim();if(!content)return;
+  if(!window.VXAuth||!window.VXAuth.user){add('assistant','Please sign in with Google from your Profile first. Your Coach access is linked to your VIROX account.');return}
+  busy=true;send.disabled=true;input.value='';messages.push({role:'user',content});add('user',content);
+  const pending=add('assistant','Thinking…');
+  try{
+   const token=await window.VXAuth.token();
+   const response=await fetch('/api/coach',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+token},body:JSON.stringify({messages})});
+   const data=await response.json().catch(()=>({}));
+   if(!response.ok)throw new Error(data.error||'The Coach is temporarily unavailable.');
+   pending.textContent=data.answer||'No answer received.';messages.push({role:'assistant',content:data.answer||''});
+  }catch(error){pending.textContent=error.message||'The Coach is temporarily unavailable.';messages.pop()}
+  finally{busy=false;send.disabled=false;input.focus();log.scrollTop=log.scrollHeight}
+ });
+})();
+</script>
+</body></html>

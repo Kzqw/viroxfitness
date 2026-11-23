@@ -30,11 +30,17 @@ Never put the service-account JSON or its private key in GitHub, HTML, or a publ
 
 After adding the variables, trigger a new deploy so the Functions receive them.
 
-### 3. Firestore security rules
+### 3. Configure the AI Coach (optional)
+
+The Apple-style Coach interface and the secure `/.netlify/functions/coach` endpoint are included on this branch. To activate real AI replies, an adult project owner must configure an OpenAI API key as a **Netlify server-side environment variable** named `OPENAI_API_KEY`. Never put the key in `index.html`, browser code, or GitHub. The default model is `gpt-6.2-astra`; `OPENAI_MODEL` can override it. API usage may incur charges, so keep usage limits and account billing under adult supervision. Without this variable, the Coach UI remains visible but the endpoint returns a setup message.
+
+The endpoint requires a signed-in Firebase user and limits each account to 12 requests per UTC day. Conversation messages are sent to the model with `store: false`; the UI keeps the current chat in memory only.
+
+### 4. Firestore security rules
 
 Publish the contents of `firestore.rules` in Firebase Console → Firestore Database → Rules. The browser is deliberately denied direct access; trusted Netlify Functions use the Firebase Admin SDK.
 
-### 4. Test
+### 5. Test
 
 - Open the Netlify site and choose **Continue with Google** in Profile.
 - Sign in with the owner Google account above.
